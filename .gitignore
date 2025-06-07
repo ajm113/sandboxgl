@@ -1,0 +1,46 @@
+# CMake build directory
+/build/
+/CMakeCache.txt
+/CMakeFiles/
+/cmake_install.cmake
+/Makefile
+
+# Compiled binaries and object files
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.a
+*.lib
+*.exe
+
+# Google Test build files
+/testing/
+test/**/*.o
+test/**/*.out
+test/**/*.a
+test/**/*.exe
+
+# Logs and debug files
+*.log
+*.tmp
+*.swp
+*.swo
+*.swn
+*.bak
+*.stackdump
+
+#  IDE and Editor files
+/.idea/
+/.vscode/
+/*.code-workspace
+*.sublime-project
+*.sublime-workspace
+/.clangd
+/.ccls
+/.ccls-cache/
+
+# spdlog FetchContent cache
+/_deps/
+
