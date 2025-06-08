@@ -8,12 +8,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(ASSETS_SOURCE_DIR "${CMAKE_SOURCE_DIR}/data")
 set(ASSETS_DEST_DIR "${CMAKE_BINARY_DIR}/data")
 
-set(ASSETS_CONFIG_SOURCE "${CMAKE_SOURCE_DIR}/config.json")
-set(ASSETS_CONFIG_DEST "${CMAKE_BINARY_DIR}/config.json")
+set(ASSETS_CONFIG_SOURCE "${CMAKE_SOURCE_DIR}/config.yaml")
+set(ASSETS_CONFIG_DEST "${CMAKE_BINARY_DIR}/config.yaml")
 
 # Find and include GLFW
 find_package(glfw3 REQUIRED)
 find_package(OpenGL REQUIRED)
+
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/external/glad/include")
 
 include(FetchContent)
 
@@ -26,13 +28,12 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(spdlog)
 
 FetchContent_Declare(
-  nlohmann_json
-  GIT_REPOSITORY  https://github.com/nlohmann/json.git
-  GIT_TAG         v3.11.3  # Latest stable version
+  yaml-cpp
+  GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
+  GIT_TAG master
 )
 
-FetchContent_MakeAvailable(nlohmann_json)
-
+FetchContent_MakeAvailable(yaml-cpp)
 
 FetchContent_Declare(
 	glm
@@ -57,6 +58,9 @@ file(COPY "${ASSETS_CONFIG_SOURCE}" DESTINATION "${ASSETS_CONFIG_DEST}")
 
 add_executable(sandboxgl 
     sandboxgl.cpp
+    utils.cpp
+    shaderLoader.cpp
+    external/glad/src/glad.c
 )
 
 target_link_libraries(
@@ -65,8 +69,8 @@ target_link_libraries(
     OpenGL::GL
     spdlog::spdlog
     m
-    nlohmann_json
     glm::glm
+    yaml-cpp::yaml-cpp
 )
 
 enable_testing()
@@ -90,8 +94,8 @@ target_link_libraries(
   gtest_main
   spdlog::spdlog
   m
-  nlohmann_json
   glm::glm
+  yaml-cpp::yaml-cpp
 )
 
 add_test(NAME RunTests COMMAND sandboxgl_test)

@@ -1,0 +1,6 @@
+program:
+  fragment: "hello.frag"
+  vertex: "hello.vert"
+objects:
+  - type: triangle
+

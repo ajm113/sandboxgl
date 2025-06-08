@@ -1,3 +1,4 @@
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <memory>
@@ -30,6 +31,13 @@ public:
         glfwSetWindowUserPointer(window, this);
         glfwSetKeyCallback(window, key_callback);
         glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+            spdlog::error("failed to load GLAD");
+            clearAll();
+            return false;
+        }
+
         return true;
     }
 
